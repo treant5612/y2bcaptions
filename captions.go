@@ -39,14 +39,14 @@ func GetSubtitleInfoFromId(videoId string) (caption *Captions, err error) {
 	if err != nil {
 		return nil, err
 	}
-	return getCaptionInfoFromHtml(videoId, content)
+	return GetCaptionInfoFromHtml(videoId, content)
 }
 
 var ErrParseHtmlFailed = errors.New("parse html failed")
 var ErrCaptionNotFound = errors.New("no available captions")
 var ytInitialPlayerResponse = regexp.MustCompile(`\["ytInitialPlayerResponse"\] = (.+);`)
 
-func getCaptionInfoFromHtml(videoId string, html []byte) (captions *Captions, err error) {
+func GetCaptionInfoFromHtml(videoId string, html []byte) (captions *Captions, err error) {
 	matches := ytInitialPlayerResponse.FindSubmatch(html)
 	if len(matches) < 1 {
 		return nil, ErrParseHtmlFailed
