@@ -35,6 +35,9 @@ func (j *Json3) ToSrt() (b []byte) {
 		for _, s := range event.Segs {
 			seg += s.Utf8
 		}
+		if len(seg) == 0 || seg == "\n" {
+			continue
+		}
 		buf.WriteString(fmt.Sprintf("%d\n%s --> %s\n%s\n\n", n, start, end, seg))
 		n++
 	}
